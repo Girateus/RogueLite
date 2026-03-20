@@ -5,11 +5,12 @@ using UnityEngine;
 public enum RoomType
 {
     Fight,
+    BigFight,
     Shop,
     Boss,
     End,
     Pool,
-    Secret,
+    Start,
 }
 
 [ System.Serializable]

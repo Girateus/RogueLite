@@ -1951,7 +1951,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_84
+      name: Merlin
       rect:
         serializedVersion: 2
         x: 0
@@ -1995,7 +1995,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_86
+      name: Smith
       rect:
         serializedVersion: 2
         x: 32
@@ -3028,7 +3028,9 @@ TextureImporter:
       GroundDetail: -1264093509
       GroundPavement: 2114262123
       LeftWall: -2028856541
+      Merlin: 305517755
       RightWall: -1019096679
+      Smith: 746068914
       Stairs: 821551191
       TileGround: -2063124550
       TopCornerLeft: -5773244093850934461
@@ -3138,9 +3140,7 @@ TextureImporter:
       tilemap_packed_81: -453862736
       tilemap_packed_82: 1340489851
       tilemap_packed_83: 2119996680
-      tilemap_packed_84: 305517755
       tilemap_packed_85: -605678794
-      tilemap_packed_86: 746068914
       tilemap_packed_87: -261828038
       tilemap_packed_88: 438524803
       tilemap_packed_89: 1555635977

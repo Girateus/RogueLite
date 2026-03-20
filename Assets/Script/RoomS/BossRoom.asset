@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: BossRoom
   m_EditorClassIdentifier: Assembly-CSharp::RoomStereotype
   Size: {x: 0, y: 0}
-  Type: 2
+  Type: 3
   Links:
-  - Probability: 1
+  - Probability: 2
     State: {fileID: 11400000, guid: cb113dd1be9cd8e4eb21c6d549390a49, type: 2}
+  - Probability: 1.5
+    State: {fileID: 11400000, guid: 6aa967158e031d6428175fdda3e3585a, type: 2}
