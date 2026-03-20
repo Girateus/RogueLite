@@ -34,7 +34,7 @@ public class MarkovState
             float rngSum = 0;
             foreach (MarkovLink link in _links)
             {
-                rngSum += link.Probability; // ✅ accumuler AVANT
+                rngSum += link.Probability;
                 if (rng < rngSum)
                     return link.State;
             }

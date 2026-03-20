@@ -112,7 +112,7 @@ public class DungeonGenerator : MonoBehaviour
 
         if (_spawnedPlayer != null) Destroy(_spawnedPlayer);
 
-        _spawnRoom = _rooms[0]; // toujours la première room = spawn room
+        _spawnRoom = _rooms[0];
 
         Vector3 spawnPos = _spawnRoom.center;
         spawnPos.z = 0;
