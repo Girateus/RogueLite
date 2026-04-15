@@ -25,10 +25,17 @@ public class DungeonGenerator : MonoBehaviour
 
     [Header("Corridors")]
     [SerializeField] private int _corridorSize = 3;
+    
+    [Header("Walls")]
+    [SerializeField] private Tilemap _tilemapWalls;
+    [SerializeField] private RuleTile _tileWall;
 
     [Header("Player")]
     [SerializeField] private GameObject _playerPrefab;
     private GameObject _spawnedPlayer;
+    
+    [Header("Enemies")]
+    [SerializeField] private EnemySpawner _enemySpawner;
 
     [Header("Markov / Room Types")]
     [SerializeField] private RoomStereotype _startRoomStereotype;
@@ -44,6 +51,7 @@ public class DungeonGenerator : MonoBehaviour
     private List<BoundsInt> _rooms = new List<BoundsInt>();
     private List<BoundsInt> _cutBounds = new List<BoundsInt>();
     private List<Corridor> _corridors = new List<Corridor>();
+    private List<Vector2Int> _corridorTiles = new List<Vector2Int>();
     private BoundsInt _spawnRoom;
 
     void Start()
@@ -64,12 +72,14 @@ public class DungeonGenerator : MonoBehaviour
         _cutBounds = PCG.BspTree.GetBounds(root);
         _corridors = PCG.BspTree.MakeCorridors(root);
 
-        var corridorTiles = new List<Vector2Int>();
+        _corridorTiles.Clear();
         foreach (Corridor corridor in _corridors)
-            corridorTiles.AddRange(PCG.Corridor.LCorridors(corridor, Corridor.CorridorIntersectType.FirstXThenY));
+            _corridorTiles.AddRange(PCG.Corridor.LCorridors(corridor, Corridor.CorridorIntersectType.FirstXThenY, 2));
 
+        _tilemapWalls?.ClearAllTiles();
         _tilemapGround.ClearAllTiles();
         _tilemapCorridors.ClearAllTiles();
+        _enemySpawner?.ClearEnemies();
         foreach (var obj in _spawnedRoomVisuals)
             if (obj != null) DestroyImmediate(obj);
         _spawnedRoomVisuals.Clear();
@@ -81,11 +91,13 @@ public class DungeonGenerator : MonoBehaviour
         }
         foreach (BoundsInt room in _rooms)
             PCG.Utils.DrawMap(_tilemapGround, _tileGround, room);
-        PCG.Utils.DrawMap(_tilemapCorridors, _tileCorridor, corridorTiles);
+        PCG.Utils.DrawMap(_tilemapCorridors, _tileCorridor, _corridorTiles);
 
+        GenerateWalls();
         GenerateRoomSequence(_rooms.Count);
         SpawnPlayer();
         SpawnRoomVisuals();
+        _enemySpawner?.SpawnEnemies(_rooms, _roomSequence);
     }
 
     // ── Markov ────────────────────────────────────────────────
@@ -156,6 +168,39 @@ public class DungeonGenerator : MonoBehaviour
             RoomType.Shop  => _shopRoomPrefab,
             _              => null
         };
+    }
+    
+    private void GenerateWalls()
+    {
+        if (_tilemapWalls == null || _tileWall == null) return;
+
+        _tilemapWalls.ClearAllTiles();
+
+        // 1. Collecter toutes les positions de sol
+        HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
+
+        foreach (BoundsInt room in _rooms)
+        foreach (var pos in room.allPositionsWithin)
+            floorTiles.Add(new Vector2Int(pos.x, pos.y));
+
+        foreach (var pos in _corridorTiles)
+            floorTiles.Add(pos);
+
+        // 2. Pour chaque tile de sol, vérifier les 8 voisins
+        HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
+
+        foreach (Vector2Int tile in floorTiles)
+        {
+            foreach (Vector2Int dir in PCG.Utils.MooreDirections)
+            {
+                Vector2Int neighbor = tile + dir;
+                if (!floorTiles.Contains(neighbor))
+                    wallTiles.Add(neighbor);
+            }
+        }
+        
+        foreach (Vector2Int wall in wallTiles)
+            _tilemapWalls.SetTile(new Vector3Int(wall.x, wall.y, 0), _tileWall);
     }
 
     // ── Gizmos ────────────────────────────────────────────────

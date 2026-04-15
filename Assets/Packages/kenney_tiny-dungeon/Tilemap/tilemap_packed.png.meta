@@ -78,7 +78,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -323,7 +323,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_10
+      name: _door_left_open
       rect:
         serializedVersion: 2
         x: 160
@@ -345,7 +345,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_11
+      name: _door_right_open
       rect:
         serializedVersion: 2
         x: 176
@@ -961,7 +961,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_39
+      name: _stair
       rect:
         serializedVersion: 2
         x: 48
@@ -1445,7 +1445,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_61
+      name: _path_tile
       rect:
         serializedVersion: 2
         x: 16
@@ -2017,7 +2017,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_87
+      name: KingBaldulf
       rect:
         serializedVersion: 2
         x: 48
@@ -2061,7 +2061,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_89
+      name: _chest
       rect:
         serializedVersion: 2
         x: 80
@@ -2215,7 +2215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_96
+      name: Sir_Lancelot
       rect:
         serializedVersion: 2
         x: 0
@@ -2347,7 +2347,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_102
+      name: Shield
       rect:
         serializedVersion: 2
         x: 96
@@ -2391,7 +2391,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_104
+      name: Sword
       rect:
         serializedVersion: 2
         x: 128
@@ -2413,7 +2413,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_105
+      name: Arondight
       rect:
         serializedVersion: 2
         x: 144
@@ -2435,7 +2435,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_106
+      name: BigSword
       rect:
         serializedVersion: 2
         x: 160
@@ -2457,7 +2457,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_107
+      name: Excalibur
       rect:
         serializedVersion: 2
         x: 176
@@ -2479,7 +2479,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_108
+      name: Ghost
       rect:
         serializedVersion: 2
         x: 0
@@ -2501,7 +2501,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_109
+      name: Cyclop
       rect:
         serializedVersion: 2
         x: 16
@@ -2523,7 +2523,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_110
+      name: Crab
       rect:
         serializedVersion: 2
         x: 32
@@ -2545,7 +2545,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_111
+      name: DarkMage
       rect:
         serializedVersion: 2
         x: 48
@@ -2677,7 +2677,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_117
+      name: Hammer
       rect:
         serializedVersion: 2
         x: 144
@@ -2699,7 +2699,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_118
+      name: Battle_Axe
       rect:
         serializedVersion: 2
         x: 160
@@ -2743,7 +2743,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_120
+      name: Bat
       rect:
         serializedVersion: 2
         x: 0
@@ -2765,7 +2765,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_121
+      name: GreaterGhost
       rect:
         serializedVersion: 2
         x: 16
@@ -2787,7 +2787,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_122
+      name: Spider
       rect:
         serializedVersion: 2
         x: 32
@@ -2809,7 +2809,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_123
+      name: Rat
       rect:
         serializedVersion: 2
         x: 48
@@ -2941,7 +2941,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_129
+      name: Electro_Staff
       rect:
         serializedVersion: 2
         x: 144
@@ -2963,7 +2963,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_130
+      name: Water_Staff
       rect:
         serializedVersion: 2
         x: 160
@@ -2985,7 +2985,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_131
+      name: Spear
       rect:
         serializedVersion: 2
         x: 176
@@ -3022,16 +3022,35 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
+      Arondight: -1265986350
       Arthur: -351727154
+      Bat: 1592168440
+      Battle_Axe: -1018669665
+      BigSword: -200842838
       BottomCornerLeft: 1721039500
       BottomCornerRight: 1136552018
+      Crab: -567677051
+      Cyclop: 332302744
+      DarkMage: -1431456637
+      Electro_Staff: 673801569
+      Excalibur: 284894661
+      Ghost: -2108447273
+      GreaterGhost: 2131300113
       GroundDetail: -1264093509
       GroundPavement: 2114262123
+      Hammer: 1600091646
+      KingBaldulf: -261828038
       LeftWall: -2028856541
       Merlin: 305517755
+      Rat: -245859464
       RightWall: -1019096679
+      Shield: 1505400161
+      Sir_Lancelot: -1034091123
       Smith: 746068914
+      Spear: 1151713891
+      Spider: -578162207
       Stairs: 821551191
+      Sword: 277631725
       TileGround: -2063124550
       TopCornerLeft: -5773244093850934461
       TopCornerRight: -83448744
@@ -3042,42 +3061,28 @@ TextureImporter:
       WallTop: 1779707234
       WallUp: 621083795
       WallWindow: -2010697043
+      Water_Staff: 45931560
+      _chest: 1555635977
+      _door_left_open: -1613164587
+      _door_right_open: 1452859427
+      _path_tile: -1060561994
+      _stair: 1053749568
       tilemap_packed_0: -1453350334737186109
-      tilemap_packed_10: -1613164587
       tilemap_packed_100: 419408156
       tilemap_packed_101: -853253738
-      tilemap_packed_102: 1505400161
       tilemap_packed_103: 4235528
-      tilemap_packed_104: 277631725
-      tilemap_packed_105: -1265986350
-      tilemap_packed_106: -200842838
-      tilemap_packed_107: 284894661
-      tilemap_packed_108: -2108447273
-      tilemap_packed_109: 332302744
-      tilemap_packed_11: 1452859427
-      tilemap_packed_110: -567677051
-      tilemap_packed_111: -1431456637
       tilemap_packed_112: -1051290874
       tilemap_packed_113: 112922988
       tilemap_packed_114: -1307892976
       tilemap_packed_115: 1373219829
       tilemap_packed_116: -1508114786
-      tilemap_packed_117: 1600091646
-      tilemap_packed_118: -1018669665
       tilemap_packed_119: 58052972
       tilemap_packed_12: 1357926871
-      tilemap_packed_120: 1592168440
-      tilemap_packed_121: 2131300113
-      tilemap_packed_122: -578162207
-      tilemap_packed_123: -245859464
       tilemap_packed_124: 221448003
       tilemap_packed_125: -933346398
       tilemap_packed_126: -247537033
       tilemap_packed_127: -1547154449
       tilemap_packed_128: 1756569746
-      tilemap_packed_129: 673801569
-      tilemap_packed_130: 45931560
-      tilemap_packed_131: 1151713891
       tilemap_packed_14: 1866571098
       tilemap_packed_16: -1103124899
       tilemap_packed_17: -53767257
@@ -3096,7 +3101,6 @@ TextureImporter:
       tilemap_packed_35: 579691716
       tilemap_packed_36: 1578536203
       tilemap_packed_38: -2043967725
-      tilemap_packed_39: 1053749568
       tilemap_packed_4: -531622606
       tilemap_packed_41: 860734822
       tilemap_packed_43: 1942593811
@@ -3115,7 +3119,6 @@ TextureImporter:
       tilemap_packed_58: 2137493837
       tilemap_packed_6: -764963012
       tilemap_packed_60: -2129114605
-      tilemap_packed_61: -1060561994
       tilemap_packed_62: -2005764346
       tilemap_packed_63: -1994578549
       tilemap_packed_64: 1393285966
@@ -3141,9 +3144,7 @@ TextureImporter:
       tilemap_packed_82: 1340489851
       tilemap_packed_83: 2119996680
       tilemap_packed_85: -605678794
-      tilemap_packed_87: -261828038
       tilemap_packed_88: 438524803
-      tilemap_packed_89: 1555635977
       tilemap_packed_9: -11998757
       tilemap_packed_90: -1918809743
       tilemap_packed_91: -1428046424
@@ -3151,7 +3152,6 @@ TextureImporter:
       tilemap_packed_93: 894151012
       tilemap_packed_94: -464104330
       tilemap_packed_95: -1183240856
-      tilemap_packed_96: -1034091123
       tilemap_packed_98: -1351863102
       tilemap_packed_99: -1645307716
   mipmapLimitGroupName: 

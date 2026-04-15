@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class MarkovChainEnemy : MonoBehaviour
 {
-    private MarkovStateEnemy _mele = new MarkovStateEnemy("Mele");
-    private MarkovStateEnemy _range = new MarkovStateEnemy("Range");
-    private MarkovStateEnemy _summoner = new MarkovStateEnemy("Summoner");
-    private MarkovStateEnemy _healer = new MarkovStateEnemy("Healer");
+    private MarkovStateEnemy _mele = new MarkovStateEnemy("Cyclop");
+    private MarkovStateEnemy _range = new MarkovStateEnemy("Lesser Ghost");
+    private MarkovStateEnemy _summoner = new MarkovStateEnemy("Greater Ghost");
+   // private MarkovStateEnemy _healer = new MarkovStateEnemy("Healer");
     
     private MarkovStateEnemy _chain;
     [SerializeField] private int _maxStates = 10;
@@ -15,7 +15,7 @@ public class MarkovChainEnemy : MonoBehaviour
     {
         _mele.AddLink(new MarkovLinkEnemy {Probability = 0.3f, State = _mele});
         _range.AddLink(new MarkovLinkEnemy{Probability = 0.3f, State = _range});
-        _healer.AddLink(new MarkovLinkEnemy{Probability = 0.2f, State = _healer});
+       // _healer.AddLink(new MarkovLinkEnemy{Probability = 0.2f, State = _healer});
         _summoner.AddLink(new MarkovLinkEnemy{Probability = 0.2f, State = _summoner});
         
         _chain = _mele;
