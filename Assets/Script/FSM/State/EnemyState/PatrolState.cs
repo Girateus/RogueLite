@@ -29,10 +29,16 @@ namespace FSM
                 return;
             }
             
-            Vector2 pos = _ctx.Transform.position;
-            _ctx.Transform.position = Vector2.MoveTowards(pos, _targetPoint, _ctx.MoveSpeed * Time.deltaTime);
+            // 1. Get current 2D position
+            Vector2 currentPos = _ctx.Transform.position;
+            
+            // 2. Calculate movement
+            Vector2 nextPos = Vector2.MoveTowards(currentPos, _targetPoint, _ctx.MoveSpeed * Time.deltaTime);
+            
+            // 3. Apply with original Z to avoid visual glitches
+            _ctx.Transform.position = new Vector3(nextPos.x, nextPos.y, _ctx.Transform.position.z);
 
-            if (Vector2.Distance(pos, _targetPoint) < 0.1f)
+            if (Vector2.Distance(currentPos, _targetPoint) < 0.1f)
             {
                 _waiting = true;
                 _waitTimer = _waitTime;
@@ -40,12 +46,13 @@ namespace FSM
         }
 
         public void Exit() { }
-        public EnemyContext Context { get; set; }
 
         private void PickNewTarget()
         {
             Vector2 offset = Random.insideUnitCircle * 3f;
-            _targetPoint = (Vector2)_ctx.Transform.position + offset;
+            // Explicitly create a Vector2 from the position
+            Vector2 currentPos2D = new Vector2(_ctx.Transform.position.x, _ctx.Transform.position.y);
+            _targetPoint = currentPos2D + offset;
         }
     }
 }

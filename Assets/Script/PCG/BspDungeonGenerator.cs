@@ -23,8 +23,8 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField][Range(0.1f, 1f)] private float _shrinkFactor = 0.8f;
     [SerializeField] private float _jitter = 25;
 
-    [Header("Corridors")]
-    [SerializeField] private int _corridorSize = 3;
+    /*[Header("Corridors")]
+    [SerializeField] private int _corridorSize = 3;*/
     
     [Header("Walls")]
     [SerializeField] private Tilemap _tilemapWalls;
@@ -40,6 +40,8 @@ public class DungeonGenerator : MonoBehaviour
     [Header("Markov / Room Types")]
     [SerializeField] private RoomStereotype _startRoomStereotype;
     private List<RoomStereotype> _roomSequence = new List<RoomStereotype>();
+    [SerializeField] private RoomStereotype _smallFightRoomStereotype; // fallback
+    [SerializeField] private RoomStereotype _bossRoomStereotype;
 
     [Header("Room Visuals")]
     [SerializeField] private GameObject _bossRoomPrefab;        // red
@@ -112,9 +114,40 @@ public class DungeonGenerator : MonoBehaviour
             _roomSequence.Add(current);
             current = current.NextRoom();
         }
+        
+        EnforceBossRule();
 
         string seq = string.Join(" → ", _roomSequence.Select(r => r?.Type.ToString() ?? "null"));
         Debug.Log($"[Markov] Séquence : {seq}");
+        
+        
+    }
+    
+    private void EnforceBossRule()
+    {
+        // Trouver tous les index Boss générés
+        var bossIndexes = _roomSequence
+            .Select((r, i) => (r, i))
+            .Where(x => x.r != null && x.r.Type == RoomType.Boss)
+            .Select(x => x.i)
+            .ToList();
+
+        if (bossIndexes.Count == 0)
+        {
+            // Aucun boss → forcer le dernier slot en Boss
+            _roomSequence[_roomSequence.Count - 1] = _bossRoomStereotype;
+            Debug.Log("[Markov] Aucun Boss trouvé → forcé en dernière room");
+        }
+        else if (bossIndexes.Count > 1)
+        {
+            // Trop de boss → garder uniquement le dernier, remplacer les autres par Fight
+            int keepIndex = bossIndexes.Last();
+            foreach (int i in bossIndexes.Where(i => i != keepIndex))
+            {
+                _roomSequence[i] = _smallFightRoomStereotype;
+                Debug.Log($"[Markov] Boss en double supprimé à l'index {i}");
+            }
+        }
     }
 
     // ── Spawn Player ──────────────────────────────────────────

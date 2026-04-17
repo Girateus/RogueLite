@@ -3,7 +3,7 @@ using UnityEngine;
 public class MarkovChainEnemy : MonoBehaviour
 {
     private MarkovStateEnemy _mele = new MarkovStateEnemy("Cyclop");
-    private MarkovStateEnemy _range = new MarkovStateEnemy("Lesser Ghost");
+    private MarkovStateEnemy _range = new MarkovStateEnemy("Bat");
     private MarkovStateEnemy _summoner = new MarkovStateEnemy("Greater Ghost");
    // private MarkovStateEnemy _healer = new MarkovStateEnemy("Healer");
     

@@ -27,11 +27,12 @@ namespace FSM
         public void Tick()
         {
             IState newState = CheckTransitions();
-            if (newState != _currentState)
+            
+            if (newState != null && newState != _currentState)
             {
                 SetState(newState);
             }
-            Debug.Log($"Ticking State : {_currentState.GetType()}");
+    
             _currentState?.Tick();
         }
 

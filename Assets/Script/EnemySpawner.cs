@@ -87,7 +87,7 @@ public class EnemySpawner : MonoBehaviour
         return enemyName switch
         {
             "Cyclop"        => _cyclopPrefab,
-            "Lesser Ghost"  => _batPrefab,
+            "Bat"  => _batPrefab,
             "Greater Ghost" => _greaterGhostPrefab,
             _               => null
         };

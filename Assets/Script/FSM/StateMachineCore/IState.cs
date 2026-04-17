@@ -6,6 +6,6 @@ namespace FSM
         public void Tick();
         public void Exit();
         
-        public EnemyContext Context { get; set; }
+       
     }
 }
