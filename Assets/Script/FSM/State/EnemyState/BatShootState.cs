@@ -17,12 +17,11 @@ public class BatShootState : IState
     public void Enter()
     {
         ShouldStopShooting = false;
-        _timer = 0f; // tire immédiatement en entrant
+        _timer = 0f;
     }
 
     public void Tick()
     {
-        // Continue d'orbiter pendant qu'elle tire
         float dist = _ctx.DistanceToPlayer;
         float diff = dist - _ctx.PreferredDistance;
         Vector2 dir = (_ctx.Transform.position - _ctx.PlayerTransform.position).normalized;
@@ -36,16 +35,14 @@ public class BatShootState : IState
         {
             _ctx.Rb.linearVelocity = Vector2.zero;
         }
-
-        // Cooldown de tir
+        
         _timer -= Time.deltaTime;
         if (_timer <= 0f)
         {
             Shoot();
             _timer = _shootCooldown;
         }
-
-        // Repasse en orbit si le joueur s'éloigne trop
+        
         if (_ctx.DistanceToPlayer > _ctx.DetectionRange)
             ShouldStopShooting = true;
     }
@@ -65,7 +62,7 @@ public class BatShootState : IState
         GameObject projectile = Object.Instantiate(
             _ctx.ProjectilePrefab,
             _ctx.Transform.position,
-            Quaternion.Euler(0, 0, angle) // orienté vers le joueur
+            Quaternion.Euler(0, 0, angle) 
         );
 
         Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();

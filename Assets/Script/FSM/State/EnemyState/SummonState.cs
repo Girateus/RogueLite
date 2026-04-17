@@ -30,7 +30,6 @@ namespace FSM
 
         private void TrySummon()
         {
-            // Nettoyer les morts
             _minions.RemoveAll(m => m == null);
 
             if (_minions.Count >= _ctx.MaxMinions) return;
