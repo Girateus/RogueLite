@@ -2633,7 +2633,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tilemap_packed_115
+      name: Potion
       rect:
         serializedVersion: 2
         x: 112
@@ -3042,6 +3042,7 @@ TextureImporter:
       KingBaldulf: -261828038
       LeftWall: -2028856541
       Merlin: 305517755
+      Potion: 1373219829
       Rat: -245859464
       RightWall: -1019096679
       Shield: 1505400161
@@ -3074,7 +3075,6 @@ TextureImporter:
       tilemap_packed_112: -1051290874
       tilemap_packed_113: 112922988
       tilemap_packed_114: -1307892976
-      tilemap_packed_115: 1373219829
       tilemap_packed_116: -1508114786
       tilemap_packed_119: 58052972
       tilemap_packed_12: 1357926871

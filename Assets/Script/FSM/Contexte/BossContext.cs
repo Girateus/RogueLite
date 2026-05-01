@@ -15,7 +15,7 @@ namespace FSM
         public float DashSpeed;
         public float DashDuration;
         public float DashCooldown;
-        public Animator Animator;
+        public Animator _animator;
 
         // Baldufl
         public float AttackCooldown;

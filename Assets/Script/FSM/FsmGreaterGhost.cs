@@ -15,7 +15,7 @@ public class FsmGreaterGhost : MonoBehaviour
     private Machine _machine;
     private EnemyContext _ctx;
 
-    private void Start()
+    private void Awake()
     {
         Transform player = GameObject.FindWithTag("Player")?.transform;
 
@@ -25,7 +25,8 @@ public class FsmGreaterGhost : MonoBehaviour
             MoveSpeed = _moveSpeed,
             MinionPrefab = _lesserGhostPrefab,
             SummonCooldown = _summonCooldown,
-            MaxMinions = _maxMinions
+            MaxMinions = _maxMinions,
+            Rb = GetComponent<Rigidbody2D>()
         };
         
         var patrol = new PatrolState(_ctx);
@@ -52,4 +53,9 @@ public class FsmGreaterGhost : MonoBehaviour
     }
 
     private void Update() => _machine?.Tick();
+    
+    public void SetRoom(BoundsInt room)
+    {
+        if (_ctx != null) _ctx.Room = room;
+    }
 }

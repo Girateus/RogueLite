@@ -18,6 +18,6 @@ MonoBehaviour:
   - Probability: 1
     State: {fileID: 11400000, guid: 2aee8ed0f58106c488f5f6bab32f036a, type: 2}
   - Probability: 1.5
-    State: {fileID: 11400000, guid: cb113dd1be9cd8e4eb21c6d549390a49, type: 2}
+    State: {fileID: 11400000}
   - Probability: 1.5
     State: {fileID: 11400000, guid: a4d5b545a26cb8f46a58cc4156d6c98f, type: 2}

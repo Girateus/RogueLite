@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FSM;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -62,6 +63,8 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemiesInRoom(BoundsInt room, int count)
     {
         MarkovStateEnemy current = _cyclop;
+        
+        int padding = 2; 
 
         for (int i = 0; i < count; i++)
         {
@@ -69,15 +72,21 @@ public class EnemySpawner : MonoBehaviour
 
             GameObject prefab = GetPrefab(current.Name);
             if (prefab == null) { current = current.NextEnemyState(); continue; }
+        
             
-            int x = Random.Range(room.xMin + 1, room.xMax - 1);
-            int y = Random.Range(room.yMin + 1, room.yMax - 1);
+            float x = Random.Range(room.xMin + padding, room.xMax - padding);
+            float y = Random.Range(room.yMin + padding, room.yMax - padding);
             Vector3 pos = new Vector3(x + 0.5f, y + 0.5f, 0);
-
+            
+        
             GameObject enemy = Instantiate(prefab, pos, Quaternion.identity);
-            enemy.name = $"{current.Name}_{i}";
-            _spawnedEnemies.Add(enemy);
 
+
+            enemy.GetComponent<FsmCyclope>()?.SetRoom(room);
+            enemy.GetComponent<FsmBat>()?.SetRoom(room);
+            enemy.GetComponent<FsmGreaterGhost>()?.SetRoom(room);
+
+            _spawnedEnemies.Add(enemy);
             current = current.NextEnemyState();
         }
     }

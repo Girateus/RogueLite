@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6324171089526942197}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2139871568771413836}
   - component: {fileID: 6989938485597669207}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2840284434751466097}
   - component: {fileID: 3584532820147433769}
-  m_Layer: 0
+  - component: {fileID: 8281097487444532549}
+  m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,6 +179,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8281097487444532549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902247082080643735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ffaf1cdcc97c1e4a9867f32553cbd92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Relay
 --- !u!1 &2004191658148306652
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5242192579049147627}
   - component: {fileID: 5705289207107156105}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,7 +255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8167521645513294262}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +287,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4784527945011880854}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7386131500175470925}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +355,9 @@ GameObject:
   - component: {fileID: -7940548313812092504}
   - component: {fileID: 8390599117558888554}
   - component: {fileID: 6577369069759402642}
-  m_Layer: 0
+  - component: {fileID: 7881411824892009589}
+  - component: {fileID: -5798163733267935229}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -415,7 +430,19 @@ MonoBehaviour:
     m_ActionId: 6b444451-8a00-4d00-a97e-f47457f736a8
     m_ActionName: 'Player/Look[/Mouse/delta]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -7940548313812092504}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6c2ab1b8-8984-453a-af3d-a3c78ae1679a
     m_ActionName: 'Player/Attack[/Mouse/leftButton,/Keyboard/enter]'
   - m_PersistentCalls:
@@ -476,7 +503,7 @@ MonoBehaviour:
     m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &-7940548313812092504
@@ -492,6 +519,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _speed: 10
+  _hitForce: 5
+  _isHit: 0
+  _isDead: 0
 --- !u!50 &8390599117558888554
 Rigidbody2D:
   serializedVersion: 5
@@ -504,7 +534,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.05
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -565,6 +595,61 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0037365, y: 0.94171}
   m_EdgeRadius: 0
+--- !u!114 &7881411824892009589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7310648878924062800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e0279c28e1b1c24ba23870d2a08ca1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageTaker
+  _hpMax: 50
+  _destroyable: 0
+  _onDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7310648878924062800}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _gameOver:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _isBoss: 0
+  _hp: 0
+--- !u!114 &-5798163733267935229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7310648878924062800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16b1470cbcb92a24090714454a5c361f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  _pivot: {fileID: 8167521645513294262}
+  _attackRadius: 0.5
+  _damage: 5
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &7650524775887415956
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 568628727689156990}
   - component: {fileID: 2352491410264193139}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Excalibur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -630,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2034201534984620612}
   - component: {fileID: 8733696274766860992}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -686,6 +771,10 @@ PrefabInstance:
     - target: {fileID: 1491080237815954232, guid: 2e23d355c0575e54d868aa9ab16b3a7d, type: 3}
       propertyPath: m_Name
       value: Spear
+      objectReference: {fileID: 0}
+    - target: {fileID: 1491080237815954232, guid: 2e23d355c0575e54d868aa9ab16b3a7d, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1491080237815954232, guid: 2e23d355c0575e54d868aa9ab16b3a7d, type: 3}
       propertyPath: m_IsActive
@@ -775,7 +864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649932870881974685, guid: ef53fbff48d6f264fa89e4dca4fc3c16, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 649932870881974685, guid: ef53fbff48d6f264fa89e4dca4fc3c16, type: 3}
       propertyPath: m_SortingLayerID
@@ -784,6 +873,10 @@ PrefabInstance:
     - target: {fileID: 3749487063974244162, guid: ef53fbff48d6f264fa89e4dca4fc3c16, type: 3}
       propertyPath: m_Name
       value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749487063974244162, guid: ef53fbff48d6f264fa89e4dca4fc3c16, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3749487063974244162, guid: ef53fbff48d6f264fa89e4dca4fc3c16, type: 3}
       propertyPath: m_IsActive
@@ -850,6 +943,10 @@ PrefabInstance:
     - target: {fileID: 482087911982025012, guid: 17a40e72223aae0408642f0552da4ce0, type: 3}
       propertyPath: m_Name
       value: Excalibur
+      objectReference: {fileID: 0}
+    - target: {fileID: 482087911982025012, guid: 17a40e72223aae0408642f0552da4ce0, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 482087911982025012, guid: 17a40e72223aae0408642f0552da4ce0, type: 3}
       propertyPath: m_IsActive
@@ -992,6 +1089,10 @@ PrefabInstance:
     - target: {fileID: 4014373127814120845, guid: 719492d9be7b2b34796d8b7f83f3b8e6, type: 3}
       propertyPath: m_Name
       value: BattleAxe
+      objectReference: {fileID: 0}
+    - target: {fileID: 4014373127814120845, guid: 719492d9be7b2b34796d8b7f83f3b8e6, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4014373127814120845, guid: 719492d9be7b2b34796d8b7f83f3b8e6, type: 3}
       propertyPath: m_IsActive

@@ -22,9 +22,6 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private int _maxSurface = 1250;
     [SerializeField][Range(0.1f, 1f)] private float _shrinkFactor = 0.8f;
     [SerializeField] private float _jitter = 25;
-
-    /*[Header("Corridors")]
-    [SerializeField] private int _corridorSize = 3;*/
     
     [Header("Walls")]
     [SerializeField] private Tilemap _tilemapWalls;
@@ -36,6 +33,9 @@ public class DungeonGenerator : MonoBehaviour
     
     [Header("Enemies")]
     [SerializeField] private EnemySpawner _enemySpawner;
+    
+    [Header("Camera")]
+    [SerializeField] private Unity.Cinemachine.CinemachineCamera _cinemachineCamera;
 
     [Header("Markov / Room Types")]
     [SerializeField] private RoomStereotype _startRoomStereotype;
@@ -46,9 +46,13 @@ public class DungeonGenerator : MonoBehaviour
     [Header("Room Visuals")]
     [SerializeField] private GameObject _bossRoomPrefab;        // red
     [SerializeField] private GameObject _smallFightRoomPrefab;  // yellow
-    [SerializeField] private GameObject _shopRoomPrefab;        // blue
     [SerializeField] private GameObject _bigFightRoomPrefab;    // purple
     private List<GameObject> _spawnedRoomVisuals = new List<GameObject>();
+    
+    [Header("Boss Room")]
+    [SerializeField] private GameObject[] _bossPrefabs;
+    [SerializeField] private GameObject _endCanvas;
+    private BossRoom _bossRoom;
 
     private List<BoundsInt> _rooms = new List<BoundsInt>();
     private List<BoundsInt> _cutBounds = new List<BoundsInt>();
@@ -99,6 +103,7 @@ public class DungeonGenerator : MonoBehaviour
         GenerateRoomSequence(_rooms.Count);
         SpawnPlayer();
         SpawnRoomVisuals();
+        SpawnBossRoom();
         _enemySpawner?.SpawnEnemies(_rooms, _roomSequence);
     }
 
@@ -110,22 +115,27 @@ public class DungeonGenerator : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            if (current == null) break;
+            // 1. SI LA CHAÎNE CASSE, ON UTILISE LE FALLBACK AU LIEU D'ARRÊTER
+            if (current == null) 
+            {
+                Debug.LogWarning($"[Markov] Lien manquant détecté à l'index {i}, fallback sur SmallFightRoom.");
+                current = _smallFightRoomStereotype; 
+            }
+        
             _roomSequence.Add(current);
             current = current.NextRoom();
         }
-        
+    
         EnforceBossRule();
 
         string seq = string.Join(" → ", _roomSequence.Select(r => r?.Type.ToString() ?? "null"));
-        Debug.Log($"[Markov] Séquence : {seq}");
-        
-        
+        Debug.Log($"[Markov] Séquence finale : {seq}");
     }
-    
+
     private void EnforceBossRule()
     {
-        // Trouver tous les index Boss générés
+        if (_roomSequence.Count <= 1) return; // Sécurité
+
         var bossIndexes = _roomSequence
             .Select((r, i) => (r, i))
             .Where(x => x.r != null && x.r.Type == RoomType.Boss)
@@ -134,19 +144,24 @@ public class DungeonGenerator : MonoBehaviour
 
         if (bossIndexes.Count == 0)
         {
-            // Aucun boss → forcer le dernier slot en Boss
             _roomSequence[_roomSequence.Count - 1] = _bossRoomStereotype;
             Debug.Log("[Markov] Aucun Boss trouvé → forcé en dernière room");
         }
         else if (bossIndexes.Count > 1)
         {
-            // Trop de boss → garder uniquement le dernier, remplacer les autres par Fight
             int keepIndex = bossIndexes.Last();
             foreach (int i in bossIndexes.Where(i => i != keepIndex))
             {
                 _roomSequence[i] = _smallFightRoomStereotype;
                 Debug.Log($"[Markov] Boss en double supprimé à l'index {i}");
             }
+        }
+        
+        if (_roomSequence[0] != null && _roomSequence[0].Type == RoomType.Boss)
+        {
+            _roomSequence[0] = _startRoomStereotype ?? _smallFightRoomStereotype;
+            _roomSequence[_roomSequence.Count - 1] = _bossRoomStereotype; 
+            Debug.Log("[Markov] Boss retiré du spawn et forcé à la fin !");
         }
     }
 
@@ -164,6 +179,11 @@ public class DungeonGenerator : MonoBehaviour
 
         _spawnedPlayer = Instantiate(_playerPrefab, spawnPos, Quaternion.identity);
         _spawnedPlayer.name = "Player";
+        
+        
+        ConnectCamera(_spawnedPlayer.transform);
+        
+        ConnectHUD(_spawnedPlayer);
 
         Debug.Log($"[Spawn] Player → room 0 ({_roomSequence[0]?.Type}) at {spawnPos}");
     }
@@ -198,7 +218,6 @@ public class DungeonGenerator : MonoBehaviour
             RoomType.Boss  => _bossRoomPrefab,
             RoomType.Fight => _smallFightRoomPrefab,
             RoomType.BigFight => _bigFightRoomPrefab,
-            RoomType.Shop  => _shopRoomPrefab,
             _              => null
         };
     }
@@ -208,8 +227,7 @@ public class DungeonGenerator : MonoBehaviour
         if (_tilemapWalls == null || _tileWall == null) return;
 
         _tilemapWalls.ClearAllTiles();
-
-        // 1. Collecter toutes les positions de sol
+        
         HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
 
         foreach (BoundsInt room in _rooms)
@@ -218,8 +236,7 @@ public class DungeonGenerator : MonoBehaviour
 
         foreach (var pos in _corridorTiles)
             floorTiles.Add(pos);
-
-        // 2. Pour chaque tile de sol, vérifier les 8 voisins
+        
         HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
 
         foreach (Vector2Int tile in floorTiles)
@@ -258,5 +275,64 @@ public class DungeonGenerator : MonoBehaviour
         // SpawnRoom
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(_spawnRoom.center, _spawnRoom.size);
+    }
+    
+   // ── Camera ──────────────────────────────────────────────
+    private void ConnectCamera(Transform playerTransform)
+    {
+        if (_cinemachineCamera == null)
+        {
+            Debug.LogWarning("[DungeonGenerator] CinemachineCamera non assignée !");
+            return;
+        }
+
+        _cinemachineCamera.Follow = playerTransform;
+        Debug.Log("[DungeonGenerator] Caméra connectée au Player !");
+    }
+    
+    private void ConnectHUD(GameObject player)
+    {
+        DamageTaker damageTaker = player.GetComponent<DamageTaker>();
+        HUDManager hud = FindObjectOfType<HUDManager>();
+
+        if (hud == null || damageTaker == null) return;
+
+        hud.SetDamageTaker(damageTaker);
+        damageTaker._onDeath.AddListener(hud.ShowGameOver);
+        Debug.Log("[DungeonGenerator] HUD connected to Player !");
+    }
+    
+    private void SpawnBossRoom()
+    {
+        int bossIndex = _roomSequence.FindIndex(r => r != null && r.Type == RoomType.Boss);
+        
+        if (bossIndex == -1 || bossIndex >= _rooms.Count) 
+        {
+            bossIndex = _rooms.Count - 1; 
+        }
+
+        if (_bossPrefabs == null || _bossPrefabs.Length == 0) return;
+        
+        if (_bossRoom != null) DestroyImmediate(_bossRoom.gameObject);
+        
+        GameObject go = new GameObject("BossRoom_Logic");
+        _bossRoom = go.AddComponent<BossRoom>();
+        
+        GameObject randomBossPrefab = _bossPrefabs[Random.Range(0, _bossPrefabs.Length)];
+    
+        _bossRoom.SetRefs(randomBossPrefab, _endCanvas);
+        
+        _bossRoom.Init(_rooms[bossIndex]);
+        
+        if (_bossRoomPrefab != null)
+        {
+            Vector3 pos = _rooms[bossIndex].center;
+            pos.z = 0;
+            GameObject visual = Instantiate(_bossRoomPrefab, pos, Quaternion.identity);
+            visual.name = "BossRoom_Visual";
+            _spawnedRoomVisuals.Add(visual);
+        }
+
+        Debug.Log($"[DungeonGen] Boss Room générée à l'index {bossIndex} avec le boss {randomBossPrefab.name}");
     }
 }

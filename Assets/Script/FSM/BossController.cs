@@ -41,15 +41,7 @@ public abstract class BossController : MonoBehaviour
 
    
     protected abstract void OnActivated();
-
-    public void SetRoom(BoundsInt room)
-    {
-        _ctx.Room = room;
-        
-        GameObject triggerGo = new GameObject("BossRoomTrigger");
-        BossRoomTrigger trigger = triggerGo.AddComponent<BossRoomTrigger>();
-        trigger.Init(this, room);
-    }
+    
 
     protected virtual void OnDrawGizmos()
     {

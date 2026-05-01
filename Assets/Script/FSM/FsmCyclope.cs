@@ -12,7 +12,7 @@ namespace FSM
         private Machine _machine;
         private EnemyContext _ctx;
 
-        private void Start()
+        private void Awake()
         {
             Transform player = GameObject.FindWithTag("Player")?.transform;
 
@@ -20,7 +20,8 @@ namespace FSM
             {
                 DetectionRange = _detectionRange,
                 AttackRange = _attackRange,
-                MoveSpeed = _moveSpeed
+                MoveSpeed = _moveSpeed,
+                Rb = GetComponent<Rigidbody2D>()
             };
 
             var patrol = new PatrolState(_ctx);
@@ -54,6 +55,11 @@ namespace FSM
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, _ctx.AttackRange);
             
+        }
+        
+        public void SetRoom(BoundsInt room)
+        {
+            if (_ctx != null) _ctx.Room = room;
         }
     }
 }

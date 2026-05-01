@@ -17,5 +17,5 @@ MonoBehaviour:
   Links:
   - Probability: 2
     State: {fileID: 11400000}
-  - Probability: 1
+  - Probability: 2
     State: {fileID: 11400000, guid: 6aa967158e031d6428175fdda3e3585a, type: 2}

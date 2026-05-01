@@ -13,6 +13,7 @@ namespace FSM
         public float AttackRange;
         public float MoveSpeed;
         public float ProjectileSpeed;
+        public BoundsInt Room;
         
         [Header("Greater Ghost")]
         public GameObject MinionPrefab;

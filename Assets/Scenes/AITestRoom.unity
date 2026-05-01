@@ -27090,6 +27090,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6577369069759402642, guid: e5f4340b2d292ad4da8ae21f5dbf0a19, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7310648878924062800, guid: e5f4340b2d292ad4da8ae21f5dbf0a19, type: 3}
       propertyPath: m_Name
       value: Player
@@ -27362,12 +27366,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -3290847478080954905, guid: 24a396759c2e8bb488e456dca7960fd3, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5808569458632525378, guid: 24a396759c2e8bb488e456dca7960fd3, type: 3}
-      propertyPath: m_Color.r
-      value: 0.4627451
+      propertyPath: _dashDuration
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8022083971377677488, guid: 24a396759c2e8bb488e456dca7960fd3, type: 3}
       propertyPath: m_Name

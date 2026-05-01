@@ -16,7 +16,7 @@ namespace FSM
         private EnemyContext _ctx;
         private BatShootState _shootState;
 
-        private void Start()
+        private void Awake()
         {
             Transform player = GameObject.FindWithTag("Player")?.transform;
             if (player == null) return;
@@ -66,6 +66,11 @@ namespace FSM
             
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, _ctx.AttackRange);
+        }
+        
+        public void SetRoom(BoundsInt room)
+        {
+            if (_ctx != null) _ctx.Room = room;
         }
     }
     

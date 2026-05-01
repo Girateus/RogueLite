@@ -16,7 +16,7 @@ public class BossTestInitializer : MonoBehaviour
         );
 
         // We use the existing SetRoom from your original script
-        _boss.SetRoom(fakeRoom);
+       // _boss.SetRoom(fakeRoom);
         
         Debug.Log($"<color=green>[TestMode]</color> {_boss.name} initialized with dummy room data.");
     }

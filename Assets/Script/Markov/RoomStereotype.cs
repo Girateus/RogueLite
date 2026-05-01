@@ -6,11 +6,8 @@ public enum RoomType
 {
     Fight,
     BigFight,
-    Shop,
     Boss,
-    End,
-    Pool,
-    Start,
+   
 }
 
 [ System.Serializable]
@@ -37,15 +34,17 @@ public class RoomStereotype : ScriptableObject
             float rngSum = 0;
             foreach (Link link in Links)
             {
-                if (rng < rngSum + link.Probability)
+                if (rng <= rngSum + link.Probability)
                 {
                     return link.State;
                 }
                 rngSum += link.Probability;
             }
+        
+            
+            return Links.Last().State; 
         } 
-        return null;
-
+        return null; 
     }
     
 }

@@ -17,11 +17,13 @@ namespace FSM
 
         public void Enter()
         {
+            Debug.Log($"[Patrol] Enter — Room : {_ctx.Room} | min:{_ctx.Room.min} max:{_ctx.Room.max}");
             PickNewTarget();
         }
 
         public void Tick()
         {
+            Debug.Log($"[Patrol] Tick — pos:{_ctx.Transform.position} target:{_targetPoint} rb:{_ctx.Rb?.linearVelocity}");
             if (_waiting)
             {
                 _waitTimer -= Time.deltaTime;
@@ -29,14 +31,16 @@ namespace FSM
                 return;
             }
             
-            Vector2 currentPos = _ctx.Transform.position;
+            Vector2 direction = (_targetPoint - (Vector2)_ctx.Transform.position).normalized;
             
-            Vector2 nextPos = Vector2.MoveTowards(currentPos, _targetPoint, _ctx.MoveSpeed * Time.deltaTime);
-            
-            _ctx.Transform.position = new Vector3(nextPos.x, nextPos.y, _ctx.Transform.position.z);
-
-            if (Vector2.Distance(currentPos, _targetPoint) < 0.1f)
+            if (_ctx.Rb != null) 
             {
+                _ctx.Rb.linearVelocity = direction * _ctx.MoveSpeed;
+            }
+            
+            if (Vector2.Distance(_ctx.Transform.position, _targetPoint) < 0.2f)
+            {
+                if (_ctx.Rb != null) _ctx.Rb.linearVelocity = Vector2.zero; // Stop
                 _waiting = true;
                 _waitTimer = _waitTime;
             }
@@ -46,9 +50,8 @@ namespace FSM
 
         private void PickNewTarget()
         {
-            Vector2 offset = Random.insideUnitCircle * 3f;
-            Vector2 currentPos2D = new Vector2(_ctx.Transform.position.x, _ctx.Transform.position.y);
-            _targetPoint = currentPos2D + offset;
+            Vector2 randomOffset = Random.insideUnitCircle * 3f;
+            _targetPoint = (Vector2)_ctx.Transform.position + randomOffset;
         }
     }
 }

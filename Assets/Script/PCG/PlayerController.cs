@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,16 +6,24 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float _speed = 10f;
     
-    private Vector2 _moveInput; // Changed to Vector2 to handle more directions later
+    private Vector2 _moveInput; 
     private SpriteRenderer _sr;
-    private Rigidbody2D _rb; // Added for physics-based movement
+    private Rigidbody2D _rb;
+    private Animator _animator;
+    private DamageTaker _damageTaker;
+    
+    [SerializeField] private float _hitForce;
+    
+    public bool _isHit = false;
+    public bool _isDead = false;
 
     void Start()
     {
+        _animator = GetComponentInChildren<Animator>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
+        _damageTaker = GetComponent<DamageTaker>();
         
-        // Safety check: ensure we have a Rigidbody2D
         if (_rb == null) Debug.LogError("Missing Rigidbody2D on Player!");
     }
 
@@ -26,30 +35,68 @@ public class PlayerController : MonoBehaviour
 
     public void OnMoveForward(InputAction.CallbackContext ctx)
     {
-        // ReadValue as Vector2 if your Input Action is set to "Value" and "Vector2"
-        // Or keep float if it's just one axis. Let's assume Vector2 for a Rogue-lite.
         _moveInput = ctx.ReadValue<Vector2>();
+    }
+
+    public void OnAttack(InputAction.CallbackContext ctx)
+    {
+        if (!ctx.performed) return;
+        _animator.SetBool("SwordAtk", true);
+    }
+    
+    public void StopAttack()
+    {
+        _animator.SetBool("SwordAtk", false);
     }
 
     private void Move()
     {
-        // Direct velocity approach (snappy and precise for Rogue-lites)
         _rb.linearVelocity = new Vector2(_moveInput.x * _speed, _rb.linearVelocity.y);
         
-        // If you want Top-Down (Y movement too), use:
         _rb.linearVelocity = _moveInput * _speed;
     }
 
     private void FlipSprite()
     {
-        // Check movement on X axis to flip
         if (_moveInput.x > 0.1f)
-        {
-            _sr.flipX = false;
+        { 
+            transform.localScale = new Vector3(1, 1, 1);
         }
         else if (_moveInput.x < -0.1f)
         {
-            _sr.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
         }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Projectile")|| other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Hazard Touché !");
+            
+            _isHit = true;
+            _rb.linearVelocity = Vector2.zero;
+            
+            Vector2 knockbackDir = (transform.position - other.transform.position).normalized;
+            _rb.AddForce(knockbackDir * _hitForce, ForceMode2D.Impulse);
+            if (_damageTaker != null)
+            {
+                _damageTaker.TakeDamage(1f);
+                _animator.SetBool("TakeDamage", true);
+                
+            }
+            
+
+            StopCoroutine("ResetHit_co");
+            StartCoroutine("ResetHit_co");
+        }  Debug.Log("Hit what ?" + other.gameObject.name);
+       
+    }
+    
+    IEnumerator ResetHit_co()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _isHit = false;
+        _animator.SetBool("TakeDamage", false);
     }
 }

@@ -45,15 +45,12 @@ namespace FSM
         {
             if (_transition.TryGetValue(fromState, out List<Transition> transitionsList))
             {
-                //Ajouter dans la liste
-                transitionsList.Add(new Transition(condition, toState));
+             transitionsList.Add(new Transition(condition, toState));
             }
             else
             {
-                //Créer la liste
                 List<Transition> newList = new List<Transition>();
                 newList.Add(new Transition(condition, toState));
-                //Ajouter dans le dictionnaire
                 _transition.Add(fromState, newList);
                 
             }
