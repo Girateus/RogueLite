@@ -27,6 +27,11 @@ public class FsmBaldufl : BossController
             hammerAnimator
         );
     }
+    protected override void Update()
+    {
+        base.Update();
+        FlipSprite();
+    }
 
     protected override void OnActivated()
     {
@@ -50,13 +55,14 @@ public class FsmBaldufl : BossController
     
     private void FlipSprite()
     {
-        /*if (_moveInput.x > 0.1f)
-        { 
-            transform.localScale = new Vector3(1, 1, 1);
-        }
-        else if (_moveInput.x < -0.1f)
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }*/
+            if (_ctx?.PlayerTransform == null) return;
+
+            float dirX = _ctx.PlayerTransform.position.x - transform.position.x;
+
+            if (dirX > 0.1f)
+                transform.localScale = new Vector3(1, 1, 1);
+            else if (dirX < -0.1f)
+                transform.localScale = new Vector3(-1, 1, 1);
+        
     }
 }
